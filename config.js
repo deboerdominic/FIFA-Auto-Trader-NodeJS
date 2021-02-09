@@ -8,7 +8,7 @@ const config=[{
     "Yahoo_Account_1_Password": "",
     "Yahoo_Account_2_Email":"",
     "Yahoo_Account_2_Password": "",
-    "2Captcha_Key": ""
+    "2Captcha_key": ""
 
 }];
 module.exports.config=config;
