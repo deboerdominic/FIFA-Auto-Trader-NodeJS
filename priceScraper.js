@@ -4,12 +4,13 @@ const fs = require('fs');
 const request = require('request-promise-native');
 const poll = require('promise-poller').default;
 var http=require('http')
-var ipAndPort='23.19.101.78:65432'
+const config = require('./config.js');
+const 2Captcha_key=config.config[0].2Captcha_key
 
 
 
 function requestCaptchaResults(requestId) {
-    const url = `http://2captcha.com/res.php?key=3a71477fcdd51f851c8cb2f546b4c275&action=get&id=${requestId}&json=1&proxy=${ipAndPort}&proxytype=HTTPS`;
+    const url = `http://2captcha.com/res.php?key=${2Captcha_key}&action=get&id=${requestId}&json=1`;
     return async function () {
         return new Promise(async function (resolve, reject) {
             console.log('polling for response...')
@@ -31,7 +32,7 @@ let players;
 async function initiateCaptchaRequest() {
 
     console.log('Submitting solution request to 2captcha');
-    const response = await request.post('https://2captcha.com/in.php?key=3a71477fcdd51f851c8cb2f546b4c275&method=funcaptcha&publickey=A4EECF77-AC87-8C8D-5754-BF882F72063B&surl=https://ea-api.arkoselabs.com&pageurl=https://www.easports.com/fifa/ultimate-team/web-app/&json=1')
+    const response = await request.post('https://2captcha.com/in.php?key=${2Captcha_key}&method=funcaptcha&publickey=A4EECF77-AC87-8C8D-5754-BF882F72063B&surl=https://ea-api.arkoselabs.com&pageurl=https://www.easports.com/fifa/ultimate-team/web-app/&json=1')
     return JSON.parse(response).request;
 }
 async function pollForRequestResults(id, retries = 10, interval = 5000, delay = 10000) {
@@ -131,7 +132,7 @@ async function xpathClick(xpath, page) {
     const elements = await page.$x(xpath);
     await elements[0].click();
 }
-const config = require('./config.js');
+
 const futbinClubs = require('./futbinClubs.js');
 const { url } = require('inspector');
 let club = config.config[0].club;
@@ -142,8 +143,7 @@ let club = config.config[0].club;
             '--disable-web-security',
             '--disable-features=IsolateOrigins,site-per-process',
             '--ignore-certificate-errors',
-            '--ignore-certificate-errors-spki-list ',
-            `--proxy-server=${ipAndPort}`
+            '--ignore-certificate-errors-spki-list '
         ], defaultViewport: null
     });
     console.log('Running tests..');
@@ -217,7 +217,7 @@ let club = config.config[0].club;
 
     await page.waitForNavigation();
     console.log('navigated');
-/*//start futbin
+    //start futbin
     const page3 = await browser.newPage();
     let index;
     for (let c = 0; c < futbinClubs.futbinClubs.length; c++) {
@@ -276,9 +276,9 @@ let club = config.config[0].club;
     }
 
     await page3.close();
-    *///end futbin 
+    //end futbin 
     //debug verification
-    
+    /*
     const elementHandle=await page.waitForSelector('#fc-iframe-wrap')
     const frame=await elementHandle.contentFrame()
     await frame.waitForSelector('#triggerLiteMode',{displayed:true,visible:true})
@@ -340,7 +340,7 @@ let club = config.config[0].club;
 
 
 
-
+    */
     //end debug
     clickUpgrade('body > main > section > nav > button.ut-tab-bar-item.icon-transfer', 'body > main > section > section > div.ut-navigation-container-view--content > div > div > div.tile.col-1-1.ut-tile-transfer-market', page);
     clickUpgrade('body > main > section > section > div.ut-navigation-container-view--content > div > div > div.tile.col-1-1.ut-tile-transfer-market', 'body > main > section > section > div.ut-navigation-container-view--content > div > div.ut-pinned-list-container.ut-content-container > div > div.ut-pinned-list > div.ut-item-search-view > div.inline-list-select.ut-player-search-control > div > input', page);
