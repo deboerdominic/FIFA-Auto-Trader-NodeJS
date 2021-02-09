@@ -7,8 +7,9 @@ let child = childProcess.fork('priceScraper.js');
 
 const request = require('request-promise-native');
 const poll = require('promise-poller').default;
+const 2Captcha_key=config.config[0].2Captcha_key
 function requestCaptchaResults(requestId) {
-    const url = `http://2captcha.com/res.php?key=3a71477fcdd51f851c8cb2f546b4c275&action=get&id=${requestId}&json=1`;
+    const url = `http://2captcha.com/res.php?key=${2Captcha_key}&action=get&id=${requestId}&json=1`;
     return async function () {
         return new Promise(async function (resolve, reject) {
             const rawResponse = await request.get(url);
@@ -21,7 +22,7 @@ function requestCaptchaResults(requestId) {
 async function initiateCaptchaRequest() {
 
     console.log('Submitting solution request to 2captcha');
-    const response = await request.post('https://2captcha.com/in.php?key=3a71477fcdd51f851c8cb2f546b4c275&method=funcaptcha&publickey=A4EECF77-AC87-8C8D-5754-BF882F72063B&surl=https://ea-api.arkoselabs.com&pageurl=https://www.easports.com/fifa/ultimate-team/web-app/&json=1')
+    const response = await request.post('https://2captcha.com/in.php?key=${2Captcha_key}&method=funcaptcha&publickey=A4EECF77-AC87-8C8D-5754-BF882F72063B&surl=https://ea-api.arkoselabs.com&pageurl=https://www.easports.com/fifa/ultimate-team/web-app/&json=1')
     return JSON.parse(response).request;
 }
 async function pollForRequestResults(id, retries = 30, interval = 1500, delay = 15000) {
