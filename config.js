@@ -1,13 +1,13 @@
 const config=[{
     "club" : "Inter",
-    "Fifa_Account_1_Email": "ddeboerfifa@yahoo.com",
-    "Fifa_Account_1_Password": "Holland1",
-    "Fifa_Account_2_Email":"dafarmer36@yahoo.com",
-    "Fifa_Account_2_Password": "Holland123",
-    "Yahoo_Account_1_Email": "ddeboerfifa@yahoo.com",
-    "Yahoo_Account_1_Password": "Holland123",
-    "Yahoo_Account_2_Email":"dafarmer36@yahoo.com",
-    "Yahoo_Account_2_Password": "Holland123"
+    "Fifa_Account_1_Email": "",
+    "Fifa_Account_1_Password": "",
+    "Fifa_Account_2_Email":"",
+    "Fifa_Account_2_Password": "",
+    "Yahoo_Account_1_Email": "",
+    "Yahoo_Account_1_Password": "",
+    "Yahoo_Account_2_Email":"",
+    "Yahoo_Account_2_Password": ""
 
 }];
 module.exports.config=config;
